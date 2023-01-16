@@ -10,6 +10,29 @@ export class AuthController {
     }
 
     /**
+     * Get User
+     * @route GET /auth
+     * @param {any} req
+     * @param {any} res
+     * @param {any} next
+     * @returns {Promise<Object>}
+     * @memberOf AuthController
+     */
+    GetSingleUser = async (req: any, res: any, next: any) => {
+        try {
+            res
+            .status(httpStatus.CREATED)
+            .json({
+                code: httpStatus.CREATED,
+                message: "Get User",
+                data: await this.authService.GetSingleUser(req.body)
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    /**
      * Create User
      * @route POST /auth
      * @param {any} req
@@ -71,7 +94,7 @@ export class AuthController {
     Logout = async (req: any, res: any, next: any) => {
         try {
             await this.authService.Logout(req.body)
-            
+
             res
             .status(httpStatus.OK)
             .json({

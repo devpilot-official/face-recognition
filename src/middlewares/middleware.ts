@@ -10,11 +10,9 @@ export const payloaddValidation = async (req: Request, res: Response, next: Next
     if (username === "" || typeof username === 'undefined') messages.push('username is required!')
     if (password === "" || typeof password === 'undefined') messages.push('password is required!')
 
-    if (messages.length === 0) {
-      next()
-    } else {
-      throw new ApiError (httpStatus.BAD_REQUEST, messages)
-    }
+    if (messages.length !== 0) throw new ApiError (httpStatus.BAD_REQUEST, messages)
+
+    next()
   } catch (err) {
     next(err)
   }

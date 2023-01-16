@@ -45,21 +45,15 @@ export const authenticated = async (req: Request, res: Response, next: NextFunct
     if (typeof req.headers.authorization === 'undefined') throw new ApiError(httpStatus.UNAUTHORIZED, 'authentication not provided!')
 
     const token = req.headers.authorization.split(' ');
+    if (!token && token[0] !== 'Bearer') throw new ApiError(httpStatus.UNAUTHORIZED, 'request is not authorized!')
+    
+    const token_user = await unseal(token[1], JWT_SECRET);
+    const user = await redis.get(`${token_user.username}_auth`)
 
-    if (token && token[0] == 'Bearer') {
-      const token_user = await unseal(token[1], JWT_SECRET);
+    if (!user) throw new ApiError(httpStatus.UNAUTHORIZED, 'unknown data detected!')
 
-      const user = await redis.get(token_user.username)
-
-      if (!user) throw new ApiError(httpStatus.UNAUTHORIZED, 'unknown data detected!')
-
-      req.body.padi = user;
-      next();
-    } else {
-      // throw new Error();
-      throw new ApiError(httpStatus.UNAUTHORIZED, 'request is not authorized!')
-    }
-
+    req.body.username = token_user.username
+    next();
   } catch (err) {
     next(err)
   }

@@ -13,6 +13,24 @@ import { JWT_EXPIRE, JWT_SECRET } from '@/config/config';
  */
 export class AuthService {
     private salt = crypto.randomBytes(16).toString('hex')
+
+    GetSingleUser = async (payload: any) => {
+        const { username } = payload
+        try {
+            const users = JSON.parse(await redis.get('users'))
+            if (!users) throw new ApiError(httpStatus.BAD_REQUEST, 'user record not available!')
+
+            const user = users.find((user: any) => user.username === username.toLowerCase());
+            if (!user) throw new ApiError(httpStatus.BAD_REQUEST, 'unknown user!')
+
+            delete user.salt
+            delete user.password
+
+            return { ...user }
+        } catch (error) {
+            throw new ApiError(httpStatus.UNPROCESSABLE_ENTITY, error.message)
+        }
+    }
     
     Create = async (payload: any) => {
         const username = payload.username.toLowerCase()
@@ -41,7 +59,7 @@ export class AuthService {
         
         try {
             const users = JSON.parse(await redis.get('users'))
-            if (!users) throw new ApiError(httpStatus.BAD_REQUEST, 'user not found!')
+            if (!users) throw new ApiError(httpStatus.BAD_REQUEST, 'user record not available!')
 
             const user = users.find((user: any) => user.username === username.toLowerCase());
             if (!user) throw new ApiError(httpStatus.BAD_REQUEST, 'invalid username or passwordd!')
@@ -50,9 +68,11 @@ export class AuthService {
             if (user.password !== hashedPassword) throw new ApiError(httpStatus.BAD_REQUEST, 'invalid username or password!')
 
             const token = await seal(payload, JWT_SECRET, JWT_EXPIRE)
-            delete user.salt
-
+            await redis.del(`${username}_auth`)
             await redis.set(`${username}_auth`, token, 'EX', 1800)
+
+            delete user.salt
+            delete user.password
 
             return { ...user, token }
         } catch (error) {
