@@ -10,4 +10,6 @@ export const JWT_EXPIRE = Number(process.env.JWT_EXPIRE)
 
 export const APP_NAME = process.env.APP_NAME || 'Face Recognitioon API'
 export const APP_URL = process.env.APP_URL || 'http://localhost:9000'
-export const FRONT_END_URL = process.env.FRONT_END_URL || 'http://localhost:9001'
+
+export const ADMIN_USERNAME=process.env.ADMIN_USERNAME
+export const ADMIN_PASSWORD=process.env.ADMIN_PASSWORD

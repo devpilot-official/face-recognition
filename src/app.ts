@@ -9,6 +9,7 @@ import { IS_TEST, APP_NAME } from '@/config/config'
 import httpStatus from 'http-status'
 import ApiError from './utils/ApiError'
 import { errorHandler } from './middlewares/error'
+import fileUpload from 'express-fileupload'
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use(compression())
 
 app.use(cors())
 
+app.use(fileUpload({ limits: { fileSize: 3 * 1024 * 1024 } }));
 
 app.get('/', (req, res) => {
   res

@@ -9,7 +9,7 @@ import { JWT_EXPIRE, JWT_SECRET } from '@/config/config';
  * 
  * 
  * @export
- * @class CardService
+ * @class AuthService
  */
 export class AuthService {
     private salt = crypto.randomBytes(16).toString('hex')
@@ -26,7 +26,7 @@ export class AuthService {
             delete user.salt
             delete user.password
 
-            return { ...user }
+            return { ...user, images: JSON.parse(await redis.get(username)) }
         } catch (error) {
             throw new ApiError(httpStatus.UNPROCESSABLE_ENTITY, error.message)
         }
