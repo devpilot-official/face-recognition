@@ -1,8 +1,8 @@
-# Publicis Credit Card Service API
+# Face Recognition API
 
 # Requirements/Technologies
 -	NodeJS 10+
--   Javascriptt
+-   Javascript
 -   Typescript
 -   Jest
 -   Express
