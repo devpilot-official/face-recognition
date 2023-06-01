@@ -1155,10 +1155,10 @@
     "@typescript-eslint/types" "4.33.0"
     eslint-visitor-keys "^2.0.0"
 
-"@vladmandic/face-api@^1.7.8":
-  version "1.7.8"
-  resolved "https://registry.yarnpkg.com/@vladmandic/face-api/-/face-api-1.7.8.tgz#1f9111ed23c18a0f91b05e254efee4509b389b8b"
-  integrity sha512-MypVvtEfV2fxT9l97HNLg6O/c5o34eqsT8D5vYwsCc1PbbESG4hXhHslUHx4SMy7ElRUigFYpNW+bGZpErlMjw==
+"@vladmandic/face-api@^1.7.11":
+  version "1.7.11"
+  resolved "https://registry.yarnpkg.com/@vladmandic/face-api/-/face-api-1.7.11.tgz#1f2e405fe0e3879144f21383281e440d077efa07"
+  integrity sha512-jEQRN5/HDrdIEcg6pembiRvU7hk0hhkZfGfN2gxBDG95BmFZEWT/85qUrZDBJMtH51nCtcw20SI+4EGYZfqvIg==
 
 "@webgpu/types@0.1.21":
   version "0.1.21"
