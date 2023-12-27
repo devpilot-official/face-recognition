@@ -62,7 +62,7 @@
   "dependencies": {
     "@tensorflow/tfjs-node": "^4.2.0",
     "@vladmandic/face-api": "^1.7.8",
-    "axios": "^0.21.4",
+    "axios": "^1.6.3",
     "canvas": "^2.11.0",
     "compression": "^1.7.4",
     "concurrently": "^6.1.0",
